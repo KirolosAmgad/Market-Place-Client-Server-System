@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="412.0" prefWidth="604.0" styleClass="light" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="412.0" prefWidth="315.0" styleClass="dark" stylesheets="@../values/style.css">
+         <children>
+            <ImageView fitHeight="199.0" fitWidth="240.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" styleClass="fruit-item" translateY="20.0">
+               <image>
+                  <Image url="@../img/logo3.jpg" />
+               </image>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.1315789520740509" green="0.0162443146109581" blue="0.0162443146109581" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ImageView>
+            <Pane prefHeight="84.0" prefWidth="295.0" translateY="35.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+               <children>
+                  <Label layoutX="12.0" layoutY="-24.0" prefHeight="76.0" prefWidth="295.0" text="Welcome to E-Market " textAlignment="CENTER" textFill="#878787">
+                     <font>
+                        <Font name="Cambria Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="80.0" layoutY="42.0" prefHeight="39.0" prefWidth="159.0" text="Haven't Joined us yet?" textAlignment="CENTER" textFill="#878787">
+                     <font>
+                        <Font name="Cambria Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="66.0" prefWidth="315.0" translateY="50.0">
+               <children>
+                  <Button layoutX="74.0" layoutY="-12.0" mnemonicParsing="false" onAction="#opensignup" prefHeight="39.0" prefWidth="168.0" stylesheets="@../values/style.css" text="Sign Up" textFill="#878787">
+                     <font>
+                        <Font name="Cambria Bold" size="22.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+      <Pane prefHeight="412.0" prefWidth="287.0">
+         <children>
+            <TextField fx:id="email" layoutX="67.0" layoutY="179.0" prefHeight="31.0" prefWidth="205.0" promptText="name@adressemail.com" />
+            <PasswordField fx:id="password" layoutX="64.0" layoutY="253.0" prefHeight="31.0" prefWidth="188.0" promptText="password not less than 8 characters" />
+            <Label layoutX="11.0" layoutY="57.0" prefHeight="55.0" prefWidth="265.0" text="Already a Member ?" textAlignment="CENTER" textFill="#878787">
+               <font>
+                  <Font name="Cambria Bold" size="29.0" />
+               </font>
+            </Label>
+            <Pane layoutX="22.0" layoutY="140.0" prefHeight="39.0" prefWidth="42.0">
+               <children>
+                  <ImageView fitHeight="46.0" fitWidth="42.0" layoutX="-7.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/user.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <ImageView fitHeight="46.0" fitWidth="42.0" layoutX="14.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/padlock.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="60.0" layoutY="328.0" mnemonicParsing="false" onAction="#openmarket" prefHeight="39.0" prefWidth="168.0" text="Log In" textFill="#878787">
+               <font>
+                  <Font name="Cambria Bold" size="21.0" />
+               </font>
+            </Button>
+            <Label layoutX="25.0" layoutY="112.0" prefHeight="31.0" prefWidth="85.0" text="Login   " textAlignment="CENTER" textFill="#878787">
+               <font>
+                  <Font name="Cambria" size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</HBox>
