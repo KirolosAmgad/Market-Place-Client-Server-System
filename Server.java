@@ -194,3 +194,27 @@ class EchoThread extends Thread {
                         pr.println("Done");
                         pr.flush();
                         break;
+                    case ("view profile"):
+                        System.out.println("your email is : " + email);
+
+                        query = "SELECT * FROM client WHERE email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        if (rs.next()) {
+                            pr.println(rs.getString(1));pr.flush();
+                            pr.println(rs.getString(2));pr.flush();
+                            pr.println(rs.getString(3));pr.flush();
+                            pr.println(rs.getString(4));pr.flush();
+                            pr.println(rs.getString(5));pr.flush();
+                            pr.println(rs.getString(7));pr.flush();
+                            pr.println(rs.getString(8));pr.flush();
+                            pr.println(rs.getString(9));pr.flush();
+                            System.out.println("Data is sent");
+                            pr.println("Done"); pr.flush();
+                        } else {
+                            System.out.println("No Data");
+                        }
+                        //pr.flush();
+                        System.out.println("Sent data successfully");
+                        break; 
