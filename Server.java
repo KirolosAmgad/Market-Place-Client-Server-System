@@ -249,6 +249,17 @@ class EchoThread extends Thread {
                         pr.println("Done"); pr.flush();
                         System.out.println("Sent data successfully");
                         break;
+                    
+                     case("get wallet balance"):                        
+                        query = " SELECT `amount_of_money` FROM `client` WHERE Email = '" + email + "' ;";                        
+                        rs = Server.stmt.executeQuery(query);                        
+                        if(rs.next()) {                            
+                            pr.println(rs.getFloat(1)); pr.flush();                            
+                            System.out.println(rs.getFloat(1));                            
+                            System.out.println("Data Sent");}                        
+                        break;
+
+
                      case ("change Password"):
                         query = "select password from client where email='" + email + "';";
                         System.out.println("sql : " + query);
@@ -275,3 +286,4 @@ class EchoThread extends Thread {
                         break;
                     default:
                         pr.println("Ok");pr.flush();
+                  
