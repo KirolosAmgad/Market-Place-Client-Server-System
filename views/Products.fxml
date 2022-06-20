@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<!--<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProductsController">
+    <stylesheets>
+        <URL value="@/values/style.css"/>
+    </stylesheets>
+</AnchorPane>-->
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="600.0" styleClass="light" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProductsController">
+   <children>
+      <Label layoutX="161.0" layoutY="14.0" text="Manage Products" textAlignment="CENTER" textFill="#878787">
+         <font>
+            <Font name="Cambria Bold" size="35.0" />
+         </font>
+      </Label>
+      <ButtonBar layoutX="96.0" layoutY="174.0" prefHeight="44.0" prefWidth="402.0">
+         <buttons>
+            <Button mnemonicParsing="false" text="Add Product" />
+            <Button mnemonicParsing="false" text="Edit Product" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Delete Product" />
+         </buttons>
+      </ButtonBar>
+      <Label layoutX="209.0" layoutY="218.0" text=" Products List" textAlignment="CENTER" textFill="#878787">
+         <font>
+            <Font name="Cambria Bold" size="28.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" layoutX="20.0" layoutY="253.0" prefHeight="284.0" prefWidth="560.0">
+         <children>
+            <ScrollPane fx:id="scroll" prefHeight="570.0" prefWidth="785.0" styleClass="transparent" stylesheets="@../values/style.css">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+               <content>
+                  <TableView prefHeight="270.0" prefWidth="558.0">
+                    <columns>
+                      <TableColumn prefWidth="88.80001527070999" text="Product ID" />
+                      <TableColumn prefWidth="99.199951171875" text="Product Name" />
+                        <TableColumn prefWidth="99.20002746582031" text="Product Image" />
+                        <TableColumn minWidth="0.0" prefWidth="92.79998779296875" text="Product Price" />
+                        <TableColumn minWidth="-1.0" prefWidth="87.199951171875" text="Quantity" />
+                        <TableColumn minWidth="0.0" prefWidth="86.40008544921875" text="Category" />
+                    </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </children>
+      </HBox>
+      <Label layoutX="47.0" layoutY="70.0" prefHeight="32.0" prefWidth="87.0" text="Product ID" />
+      <Label layoutX="47.0" layoutY="109.0" prefHeight="17.0" prefWidth="87.0" text="Product Name" />
+      <Label layoutX="301.0" layoutY="78.0" prefHeight="17.0" prefWidth="87.0" text="Product Image" />
+      <Label layoutX="301.0" layoutY="109.0" prefHeight="17.0" prefWidth="87.0" text="Product Price" />
+      <TextField layoutX="135.0" layoutY="73.0" />
+      <TextField layoutX="135.0" layoutY="105.0" />
+      <TextField layoutX="397.0" layoutY="105.0" />
+      <TextField layoutX="397.0" layoutY="73.0" />
+      <Label layoutX="47.0" layoutY="143.0" prefHeight="17.0" prefWidth="87.0" text="Quantity" />
+      <Label layoutX="301.0" layoutY="143.0" prefHeight="17.0" prefWidth="87.0" text="Category" />
+      <TextField layoutX="135.0" layoutY="139.0" />
+      <TextField layoutX="397.0" layoutY="139.0" />
+      <Pane layoutX="429.0" layoutY="-16.0" prefHeight="86.0" prefWidth="165.0">
+         <children>
+            <ImageView fitHeight="32.0" fitWidth="33.0" layoutX="42.0" layoutY="32.0" onMouseClicked="#openaccount" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/user.png" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="0.75" contrast="-0.15" />
+               </effect>
+            </ImageView>
+            <Label layoutX="30.0" layoutY="64.0" onMouseClicked="#openaccount" prefHeight="17.0" prefWidth="73.0" text="My Account" textAlignment="CENTER" textFill="#878787" />
+            <ImageView fitHeight="33.0" fitWidth="44.0" layoutX="112.0" layoutY="32.0" onMouseClicked="#openhome" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/dash1.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="112.0" layoutY="64.0" onMouseClicked="#openhome" prefHeight="17.0" prefWidth="33.0" text="Home" textFill="#878787" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="600.0" styleClass="light" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PreviewReportsController">
+   <children>
+      <Label layoutX="161.0" layoutY="14.0" text="Preview Reports" textAlignment="CENTER" textFill="#878787">
+         <font>
+            <Font name="Cambria Bold" size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="31.0" layoutY="75.0" prefHeight="32.0" prefWidth="87.0" text="User(s) ID" />
+      <Label layoutX="14.0" layoutY="114.0" prefHeight="17.0" prefWidth="87.0" text="Product(s) ID" />
+      <TextField layoutX="102.0" layoutY="78.0" prefHeight="25.0" prefWidth="260.0" promptText="enter id of a user(s) required to be tracked" />
+      <TextField layoutX="102.0" layoutY="110.0" prefHeight="25.0" prefWidth="260.0" promptText="enter id of a product(s) required to be tracked" />
+      <ButtonBar layoutX="-2.0" layoutY="150.0" prefHeight="44.0" prefWidth="600.0">
+         <buttons>
+            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="122.0" text=" Products Report" textAlignment="CENTER" translateX="-180.0">
+               <font>
+                  <Font name="Cambria" size="12.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" prefHeight="51.0" text="Orders Report" textAlignment="CENTER" translateX="-100.0" wrapText="true">
+               <font>
+                  <Font name="Cambria" size="12.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" prefHeight="49.0" text=" Users Report" textAlignment="CENTER" translateX="-20.0">
+               <font>
+                  <Font name="Cambria" size="12.0" />
+               </font></Button>
+         </buttons>
+      </ButtonBar>
+      <Label layoutX="236.0" layoutY="205.0" text="Report" textAlignment="CENTER" textFill="#878787">
+         <font>
+            <Font name="Cambria Bold" size="28.0" />
+         </font>
+      </Label>
+      <Pane layoutX="429.0" layoutY="-23.0" prefHeight="87.0" prefWidth="167.0">
+         <children>
+            <ImageView fitHeight="32.0" fitWidth="33.0" layoutX="42.0" layoutY="32.0" onMouseClicked="#openaccount" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/user.png" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="0.75" contrast="-0.15" />
+               </effect>
+            </ImageView>
+            <Label layoutX="30.0" layoutY="63.0" onMouseClicked="#openaccount" prefHeight="17.0" prefWidth="73.0" text="My Account" textAlignment="CENTER" textFill="#878787" />
+            <ImageView fitHeight="33.0" fitWidth="44.0" layoutX="128.0" layoutY="31.0" onMouseClicked="#openhome" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/dash1.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="128.0" layoutY="63.0" onMouseClicked="#openhome" prefHeight="17.0" prefWidth="33.0" text="Home" textFill="#878787" />
+         </children>
+      </Pane>
+      <TableView layoutX="21.0" layoutY="256.0" prefHeight="270.0" prefWidth="558.0">
+         <columns>
+            <TableColumn prefWidth="88.80001527070999" text="Product ID" />
+            <TableColumn prefWidth="99.199951171875" text="Product Name" />
+            <TableColumn prefWidth="99.20002746582031" text="Product Image" />
+            <TableColumn minWidth="0.0" prefWidth="92.79998779296875" text="Product Price" />
+            <TableColumn minWidth="-1.0" prefWidth="87.199951171875" text="Quantity" />
+            <TableColumn minWidth="0.0" prefWidth="86.40008544921875" text="Category" />
+         </columns>
+      </TableView>
+   </children>
+</Pane>
