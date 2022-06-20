@@ -218,3 +218,60 @@ class EchoThread extends Thread {
                         //pr.flush();
                         System.out.println("Sent data successfully");
                         break; 
+                    case ("add to wallet"):
+                        pr.println("Enter money amount"); pr.flush();
+                        float money = Float.parseFloat(brinp.readLine());
+                        query = "update client set amount_of_money = amount_of_money + " + money + " where email = '" + email + "';";
+                        System.out.println("sql : " + query);
+                        System.out.println("money : " + money);
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        System.out.println("query is done");
+                        pr.println("Done");pr.flush();
+                        System.out.println("sent data successfully");
+                        break;
+                     case ("view orders"):
+                        query = " SELECT date,address, `order`.price, qty, product_name, id\n" +
+                                "FROM `order`, order_item, products\n" +
+                                "WHERE order_item.order_id = `order`.id &&\n" +
+                                "products.product_ID = order_item.product_ID &&\n" +
+                                "client_email = '" + email + "';";
+                        rs = Server.stmt.executeQuery(query);
+                        pr.println("OK .. there is the orders");pr.flush();
+                        while(rs.next()){
+                            pr.println(rs.getString(1));pr.flush();
+                            pr.println(rs.getString(2));pr.flush();
+                            pr.println(rs.getFloat(3));pr.flush();
+                            pr.println(rs.getInt(4));pr.flush();
+                            pr.println(rs.getString(5));pr.flush();
+                            pr.println(rs.getInt(6));pr.flush();
+                        }
+                        pr.println("Done"); pr.flush();
+                        System.out.println("Sent data successfully");
+                        break;
+                     case ("change Password"):
+                        query = "select password from client where email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        String  real_psw = "";
+                        if(rs.next()) real_psw = rs.getString(1);
+                        pr.println("Enter Your Password");pr.flush();
+                        String Entered_psw = brinp.readLine();
+                        System.out.println(real_psw);
+                        System.out.println(Entered_psw);
+                        if(real_psw.equals(Entered_psw)){
+                            pr.println("Enter Your New Password"); pr.flush();
+                            String new_psw = brinp.readLine();
+
+                            query = "update client set password = '" + new_psw + "' where email = '" + email + "';";
+                            System.out.println("sql : " + query);
+                            Server.preparedStmt = Server.con.prepareStatement(query);
+                            Server.preparedStmt.execute();
+                            pr.println("password changed"); pr.flush();System.out.println("psw changed");
+                        }
+                        else {pr.println("Sorry, You Entered wrong psw"); pr.flush(); System.out.println("psw not changed");}
+                        pr.println("Done"); pr.flush();
+                        break;
+                    default:
+                        pr.println("Ok");pr.flush();
