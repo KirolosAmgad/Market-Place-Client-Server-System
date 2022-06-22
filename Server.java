@@ -493,7 +493,52 @@ class EchoThread extends Thread {
                         Server.preparedStmt.execute();
                         pr.println("Done");pr.flush();
                         break;
- 
+                        case("get admin balance"):
+                        query = " SELECT `balance` FROM `admin` WHERE Email = 'admin@emarket.net' ;";
+                        rs = Server.stmt.executeQuery(query);
+                        if(rs.next()) {
+                            pr.println(rs.getFloat(1)); pr.flush();
+                            System.out.println(rs.getFloat(1));
+                            System.out.println("Data Sent");
+                        }
+                        break;
+                        case ("add products in stock"):
+                        pr.println("Enter Product ID"); pr.flush();
+                        productID = Integer.parseInt(brinp.readLine());
+                        pr.println("Enter added quantity"); pr.flush();
+                        quantity = Integer.parseInt(brinp.readLine());
+                        query = "update products set quantity = quantity + " + quantity + " where product_ID = " + productID + ";";
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        pr.println("Done");pr.flush();
+                        System.out.println("Data updated successfully from admin");
+                        break;
+                        case("get product id from name"):
+                        pr.println("Enter Product name"); pr.flush();
+                        product_name = brinp.readLine();
+                        query = " SELECT `product_ID` FROM `products` WHERE product_name = '"+ product_name+ "' ;";
+                        rs = Server.stmt.executeQuery(query);
+                        if(rs.next()) {
+                            pr.println(rs.getInt(1)); pr.flush();
+                            System.out.println(rs.getInt(1));
+                            System.out.println("Data Sent");
+                        }
+                        break;
+                        case ("Admin View Orders"):
+                        query = "select O.ID AS 'Order ID', Fname, Lname, C.Email, P.product_name, P.category, OI.qty, OI.price, O.date, C.address From client C, order_item OI, Products p, orders O where O.client_email = C.Email And OI.order_id = O.id And P.product_ID = OI.product_ID;";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        Boolean data_exist = false;
+                        while(rs.next()) {
+                            pr.println(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " " + rs.getString(6) + " " + rs.getInt(7) + " " + rs.getFloat(8) + " " + rs.getString(9) + " " + rs.getString(10));
+                            pr.flush();
+                            System.out.println("Data is sent");
+                            data_exist = true;
+                        }
+                        if(!data_exist) { pr.println("No Data"); pr.flush(); System.out.println("No Data");}
+                        else { pr.println("Done"); pr.flush(); System.out.println("sent data successfully");}
+                        break;
                         
                     default:
                         pr.println("Ok");pr.flush();
