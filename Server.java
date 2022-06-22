@@ -394,6 +394,105 @@ class EchoThread extends Thread {
                         pr.println("Done");
                         pr.flush();
                         break;
+                
+                     case("purchase"):
+                        query = "select CI.*, p.price, p.quantity from client AS C, cart_item as CI, products as p where C.cart_id = CI.cart_id and p.product_ID = CI.product_ID and email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        boolean cart_empty = true;
+                        boolean Items_avialable = true;
+                        float total_price = 0;
+                        while (rs.next()) {
+                            cart_empty = false;
+                            int needed_qty = rs.getInt(1);
+                            int available_qty = rs.getInt(5);
+                            total_price += rs.getFloat(4) * needed_qty;
+                            System.out.println("available in stock : " + available_qty);
+                            System.out.println("needed qty : " + needed_qty);
+                            if(available_qty < needed_qty){Items_avialable = false; break;}
+                        }
+                        if(cart_empty){
+                            pr.println("No items in cart");pr.flush();
+                            System.out.println("No items in cart");
+                            break;
+                        }
+                        else if(!Items_avialable){
+                            pr.println("Sorry, Items aren't available anymore"); pr.flush();
+                            System.out.println("Purchase not done");
+                            break;
+                        }
+                        else System.out.println("Total price for order = " + total_price);
+
+                        query = "select amount_of_money from client where email='" + email + "';";
+                        rs = Server.stmt.executeQuery(query);
+                        float amount_of_money = 0;
+                        if(rs.next()) amount_of_money = rs.getFloat(1);
+                        if(amount_of_money < total_price){
+                            pr.println("Not Enough Balance"); pr.flush();
+                            System.out.println("Purchase not done");
+                            break;
+                        }else {
+                            query = "update client set amount_of_money = amount_of_money - " + total_price + " where email = '" + email + "';";
+                            System.out.println("sql : " + query);
+                            Server.preparedStmt = Server.con.prepareStatement(query);
+                            Server.preparedStmt.execute();
+                            System.out.println("Enough balance");
+
+                            query = "update admin set balance = balance + " + total_price + " where email = 'sit.amet@yahoo.org';";
+                            System.out.println("sql : " + query);
+                            Server.preparedStmt = Server.con.prepareStatement(query);
+                            Server.preparedStmt.execute();
+                        }
+
+                        query = "SELECT address FROM client where email = '" + email + "';";
+                        rs = Server.stmt.executeQuery(query);
+                        String address = "";
+                        if(rs.next()) address = rs.getString(1);
+                        query = "INSERT INTO `order` (`address`,`price`,`client_email`,`date`) "+ "VALUES(?, ?, ?, ?);";
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.setString(1, address);
+                        Server.preparedStmt.setFloat(2, total_price);
+                        Server.preparedStmt.setString(3, email);
+                        Server.preparedStmt.setString(4, String.valueOf(new Timestamp(System.currentTimeMillis())));
+                        Server.preparedStmt.execute();
+
+                        query = "select id from `order` where client_email='" + email + "';";
+                        rs = Server.stmt.executeQuery(query);
+                        int order_id = 0;
+                        while(rs.next()) order_id = rs.getInt(1);
+
+                        query = "select CI.*, p.price from client AS C, cart_item as CI, products as p where C.cart_id = CI.cart_id and p.product_ID = CI.product_ID and email='" + email + "';";
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("sql : " + query);
+                        while (rs.next()) {
+                            query = "INSERT INTO `order_item` (price, qty, order_id, product_ID) "+ "VALUES(?, ?, ?, ?);";
+                            Server.preparedStmt = Server.con.prepareStatement(query);
+                            int needed_qty = rs.getInt(1);
+                            int prod_ID = rs.getInt(3);
+                            Server.preparedStmt.setFloat(1, rs.getFloat(4)*needed_qty);
+                            Server.preparedStmt.setInt(2, needed_qty);
+                            Server.preparedStmt.setInt(3, order_id);
+                            Server.preparedStmt.setInt(4, prod_ID);
+
+                            System.out.println("price : " + rs.getFloat(4)*needed_qty);
+                            System.out.println("qty : " + needed_qty);
+                            System.out.println("order_id : " + Server.order_id);
+                            System.out.println("prod id : " + prod_ID);
+
+                            Server.preparedStmt.execute();
+
+                            System.out.println("sql : " + query);
+                            query = "update products set quantity = quantity - " + needed_qty + "  where product_ID = "+ prod_ID +  ";" ;
+                            System.out.println("sql : " + query);
+                            Server.preparedStmt = Server.con.prepareStatement(query);
+                            Server.preparedStmt.execute();
+                        }
+                        query = "delete CI.* from client AS C, cart_item as CI where C.cart_id = CI.cart_id and C.email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        pr.println("Done");pr.flush();
+                        break;
  
                         
                     default:
