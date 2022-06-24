@@ -641,6 +641,21 @@ class EchoThread extends Thread {
                             System.out.println("Data Sent");
                         }
                         break;
+                          case ("view user reports"):
+                        query = "SELECT * FROM client;";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        Boolean data_exists = false;
+                        while(rs.next()) {
+                            pr.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " " + rs.getFloat(6) + " " + rs.getString(7) + " " + rs.getString(8) + " " + rs.getString(9) + " " + rs.getInt(10));
+                            pr.flush();
+                            System.out.println("Data is sent");
+                            data_exists = true;
+                        }
+                        if(!data_exists) { pr.println("No Data"); pr.flush(); System.out.println("No Data");}
+                        else { pr.println("Done"); pr.flush(); System.out.println("sent data successfully");}
+                        break;  
                         
                     default:
                         pr.println("Ok");pr.flush();
