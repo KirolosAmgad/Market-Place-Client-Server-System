@@ -539,6 +539,70 @@ class EchoThread extends Thread {
                         if(!data_exist) { pr.println("No Data"); pr.flush(); System.out.println("No Data");}
                         else { pr.println("Done"); pr.flush(); System.out.println("sent data successfully");}
                         break;
+                    case("user inc cart"):
+                        pr.println("Enter the Product ID");
+                        pr.flush();
+                        productID = Integer.parseInt(brinp.readLine());
+
+                        query = "select quantity, qty from products P, cart_item CI, Client C where P.product_id = CI.product_id AND C.cart_id = CI.cart_id AND P.product_id = " + productID + " And email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        int total_quantity = 0, cart_quantity = 0;
+                        if(rs.next()) {
+                            total_quantity = rs.getInt(1);
+                            cart_quantity = rs.getInt(2);
+                        }
+                        pr.println("Enter the quantity to add");
+                        pr.flush();
+                        quantity = Integer.parseInt(brinp.readLine());
+                        System.out.println(total_quantity);
+                        System.out.println(cart_quantity);
+                        System.out.println(quantity);
+                        if(total_quantity < cart_quantity + quantity){
+                            pr.println("Sorry, Quantity not available"); pr.flush(); System.out.println("qty not changed");
+                            break;
+                        }
+                        query = "update cart_item CI, Client C set qty = qty + " + quantity + " where C.cart_id = CI.cart_id And product_id = " + productID + " And email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        pr.println("Done"); pr.flush(); System.out.println("qty changed");
+                        break;
+                        
+                   case("get product info"):
+                        pr.println("Enter product ID :");
+                        pr.flush();
+                        productID = Integer.parseInt(brinp.readLine());
+                        query = " SELECT `product_name`, `category`, `price` FROM `products` WHERE product_ID = " + productID + " ;";
+                        rs = Server.stmt.executeQuery(query);
+                        if(rs.next()){
+                            pr.println(rs.getString(1)); pr.flush();
+                            System.out.println(rs.getString(1));
+                            pr.println(rs.getString(2)); pr.flush();
+                            System.out.println(rs.getString(2));
+                            pr.println(rs.getString(3)); pr.flush();
+                            System.out.println(rs.getString(3));
+                        } else {
+                            System.out.println("No Data");
+                        }
+
+                        pr.println("Done");
+                        pr.flush();
+                        System.out.println("Sent data successfully");
+                        break;
+                        
+                   case("get product id from name"):
+                        pr.println("Enter Product name"); pr.flush();
+                        product_name = brinp.readLine();
+                        query = " SELECT `product_ID` FROM `products` WHERE product_name = '"+ product_name+ "' ;";
+                        rs = Server.stmt.executeQuery(query);
+                        if(rs.next()) {
+                            pr.println(rs.getInt(1)); pr.flush();
+                            System.out.println(rs.getInt(1));
+                            System.out.println("Data Sent");
+                        }
+                        break;
                         
                     default:
                         pr.println("Ok");pr.flush();
