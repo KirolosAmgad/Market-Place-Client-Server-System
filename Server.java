@@ -311,6 +311,17 @@ class EchoThread extends Thread {
                             System.out.println("Search Failed");
                         }
                         break;
+                           case ("add products in stock"):
+                        pr.println("Enter Product ID"); pr.flush();
+                        productID = Integer.parseInt(brinp.readLine());
+                        pr.println("Enter added quantity"); pr.flush();
+                        quantity = Integer.parseInt(brinp.readLine());
+                        query = "update products set quantity = quantity + " + quantity + " where product_ID = " + productID + ";";
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        pr.println("Done");pr.flush();
+                        System.out.println("Data updated successfully from admin");
+                        break;
                  case ("view products"):
                         query = "SELECT * FROM products ;";
                         System.out.println("sql : " + query);
