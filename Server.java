@@ -656,6 +656,47 @@ class EchoThread extends Thread {
                         if(!data_exists) { pr.println("No Data"); pr.flush(); System.out.println("No Data");}
                         else { pr.println("Done"); pr.flush(); System.out.println("sent data successfully");}
                         break;  
+ case("user dec cart"):
+                        pr.println("Enter the Product ID"); pr.flush();
+                        productID = Integer.parseInt(brinp.readLine());
+                        query = "select quantity, qty from products P, cart_item CI, Client C where P.product_id = CI.product_id AND C.cart_id = CI.cart_id AND P.product_id = " + productID + " And email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        int tot_quantity = 0, cart_qty = 0;
+                        if(rs.next()) {
+                            tot_quantity = rs.getInt(1);
+                            cart_qty = rs.getInt(2);
+                        }
+                        pr.println("Enter the quantity to remove"); pr.flush();
+                        quantity = Integer.parseInt(brinp.readLine());
+                        System.out.println(tot_quantity);
+                        System.out.println(cart_qty);
+                        System.out.println(quantity);
+                        if(cart_qty - quantity < 0){
+                            pr.println("Sorry, you don't have this quantity"); pr.flush(); System.out.println("qty not changed");
+                            break;
+                        }else if(cart_qty - quantity == 0){
+                            query = "SELECT cart_id FROM client WHERE Email='" + email + "';";
+                            System.out.println("sql : " + query);
+                            rs = Server.stmt.executeQuery(query);
+                            System.out.println("query is done");
+                            if (rs.next()) cart_id = rs.getInt(1);
+                            query = "DELETE FROM cart_item WHERE cart_id= " + cart_id + " AND product_ID= " + productID +" ;";
+                            Server.preparedStmt = Server.con.prepareStatement(query);
+                            Server.preparedStmt.execute();
+                            System.out.println("Product removed");
+                            pr.println("Done");
+                            pr.flush();
+                            break;
+                        }
+                        query = "update cart_item CI, Client C set qty = qty - " + quantity + " where C.cart_id = CI.cart_id And product_id = " + productID + " And email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        pr.println("Done"); pr.flush(); System.out.println("qty changed");
+                        break;
+                   
                         
                     default:
                         pr.println("Ok");pr.flush();
