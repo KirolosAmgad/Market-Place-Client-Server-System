@@ -283,7 +283,34 @@ class EchoThread extends Thread {
                         else {pr.println("Sorry, You Entered wrong psw"); pr.flush(); System.out.println("psw not changed");}
                         pr.println("Done"); pr.flush();
                         break;
-                        
+                          case ("search"):
+                        pr.println("Enter the product name you want to search for"); pr.flush();
+                        String search = brinp.readLine();
+                        pr.println("Sending results");pr.flush();
+                        query = "select * from products where product_name like '%" + search + "%' OR category like '%" +search+ "%';";
+                        System.out.println("sql : " + query);
+                        System.out.println("search : " + search);
+                        rs = Server.stmt.executeQuery(query);
+                        boolean flag = false;
+                        while (rs.next()) {
+                            pr.println(rs.getInt(1));pr.flush();
+                            pr.println(rs.getString(2));pr.flush();
+                            pr.println(rs.getString(3));pr.flush();
+                            pr.println(rs.getString(4));pr.flush();
+                            pr.println(rs.getInt(5));pr.flush();
+                            pr.println(rs.getString(6));pr.flush();
+                            pr.println(rs.getString(7));pr.flush();
+                            flag = true;
+                        }
+                        if(flag) {
+                            pr.println("Done");pr.flush();
+                            System.out.println("Search completed");
+                        }
+                        else{
+                            pr.println("Not Found");pr.flush();
+                            System.out.println("Search Failed");
+                        }
+                        break;
                  case ("view products"):
                         query = "SELECT * FROM products ;";
                         System.out.println("sql : " + query);
