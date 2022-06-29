@@ -123,3 +123,57 @@ class EchoThread extends Thread {
                             System.out.println("UnSuccessful login, Wrong info"); pr.println("UnSuccessful login, Wrong info"); pr.flush();
                         }
                         break;
+                                        case ("register"):
+                        pr.println("Enter your First Name: ");      pr.flush();     Fname = brinp.readLine();
+                        pr.println("Enter your Last Name: ");       pr.flush();     Lname = brinp.readLine();
+                        pr.println("Enter your Email: ");           pr.flush();     email = brinp.readLine();
+                        pr.println("Enter your Password: ");        pr.flush();     password = brinp.readLine();
+                        pr.println("Enter your Mobile Number: ");   pr.flush();     mobile_num = brinp.readLine();
+                        pr.println("Enter your Birthday: ");        pr.flush();     birthday = brinp.readLine();
+                        pr.println("Enter your gender: ");          pr.flush();     gender = brinp.readLine();
+                        pr.println("Enter your address: ");         pr.flush();     address = brinp.readLine();
+
+                        System.out.println("First Name :" + Fname);
+                        System.out.println("Last Name :" + Lname);
+                        System.out.println("Email :" + email);
+                        System.out.println("Password :" + password);
+                        System.out.println("Mobile Number :" + mobile_num);
+                        System.out.println("Birthday :" + birthday);
+                        System.out.println("gender :" + gender);
+                        System.out.println("address :" + address);
+
+                        query = "INSERT INTO `client` (`FName`,`LName`,`Email`,`password`,`Mobile`,`amount_of_money`,`BDay`,`gender`,`address`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.setString(1, Fname);
+                        Server.preparedStmt.setString(2, Lname);
+                        Server.preparedStmt.setString(3, email);
+                        Server.preparedStmt.setString(4, password);
+                        Server.preparedStmt.setString(5, mobile_num);
+                        Server.preparedStmt.setFloat(6, 0);
+                        Server.preparedStmt.setString(7, birthday);
+                        Server.preparedStmt.setString(8, gender);
+                        Server.preparedStmt.setString(9, address);
+                        Server.preparedStmt.execute();
+                        System.out.println("User added");
+                        pr.println("Done"); pr.flush();
+                        break;
+                    case ("change Password"):
+                        query = "select password from client where email='" + email + "';";
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("sql : " + query);
+                        String new_psw, Entered_psw, real_psw = "";
+                        if(rs.next()) real_psw = rs.getString(1);
+                        pr.println("Enter Your Password");pr.flush();
+                        Entered_psw = brinp.readLine();
+                        if(real_psw.equals(Entered_psw)){
+                            pr.println("Enter Your New Password"); pr.flush(); new_psw = brinp.readLine();
+                            query = "update client set password = '" + new_psw + "' where email = '" + email + "';";
+                            Server.preparedStmt = Server.con.prepareStatement(query);
+                            System.out.println("sql : " + query);
+                            Server.preparedStmt.execute();
+                            pr.println("password changed"); pr.flush();
+                            System.out.println("psw changed");
+                        }
+                        else {pr.println("Sorry, You Entered wrong psw"); pr.flush(); System.out.println("psw not changed");}
+                        pr.println("Done"); pr.flush();
+                        break;
