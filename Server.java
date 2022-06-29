@@ -177,3 +177,26 @@ class EchoThread extends Thread {
                         else {pr.println("Sorry, You Entered wrong psw"); pr.flush(); System.out.println("psw not changed");}
                         pr.println("Done"); pr.flush();
                         break;
+                    case ("view profile"):
+                        query = "SELECT * FROM client WHERE email ='" + email + "';";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        if (rs.next()) {
+                            for(int i=1; i<10; i++){
+                                if(i == 6) i++; 
+                                pr.println(rs.getString(i)); pr.flush();
+                            }
+                            pr.println("Done"); pr.flush();
+                        }
+                        System.out.println("Profile retrieved successfully");
+                        break;
+                    case("get wallet balance"):
+                        query = " SELECT `amount_of_money` FROM `client` WHERE Email = '" + email + "' ;";
+                        rs = Server.stmt.executeQuery(query);
+                        if(rs.next()) {
+                            pr.println(rs.getFloat(1)); pr.flush();
+                            System.out.println(rs.getFloat(1));
+                            System.out.println("Data Sent");
+                        }
+                        break;
