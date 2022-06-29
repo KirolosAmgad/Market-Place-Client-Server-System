@@ -303,6 +303,7 @@ class EchoThread extends Thread {
                         if(!data_exist) { pr.println("No Data"); pr.flush(); System.out.println("No Data");}
                         else { pr.println("Done"); pr.flush(); System.out.println("sent data successfully");}
                         break;
+                                   
                      case ("view user reports"):
                         query = "SELECT * FROM client;";
                         System.out.println("sql : " + query);
@@ -319,6 +320,17 @@ class EchoThread extends Thread {
                         if(!data_exists) { pr.println("No Data"); pr.flush(); System.out.println("No Data");}
                         else { pr.println("Done"); pr.flush(); System.out.println("sent data successfully");}
                         break;
+                      case ("get all product names"):
+                        query = "select product_name from products;";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        while (rs.next()) {
+                            pr.println(rs.getString(1));pr.flush();
+                        }
+                        pr.println("Done");pr.flush();
+                        break;
+                                   
                     case ("add product"):
                         pr.println("Enter product ID");         pr.flush();     productID = Integer.parseInt(brinp.readLine());
                         pr.println("Enter product name");       pr.flush();     product_name = brinp.readLine();
