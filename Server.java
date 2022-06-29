@@ -257,3 +257,9 @@ class EchoThread extends Thread {
                             System.out.println("Search Failed");
                         }
                         break;
+                    case("get quantity from name"):
+                        pr.println("Enter Product name"); pr.flush(); product_name = brinp.readLine();
+                        query = " SELECT `quantity` FROM `products` WHERE product_name = '"+ product_name+ "' ;";
+                        rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
+                        if(rs.next()) { pr.println(rs.getString(1)); pr.flush(); }
+                        break;
