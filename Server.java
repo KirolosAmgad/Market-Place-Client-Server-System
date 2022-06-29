@@ -429,6 +429,47 @@ class EchoThread extends Thread {
                         System.out.println("Product removed");
                         pr.println("Done"); pr.flush();
                         break; 
+                             
+                  case ("user edit cart"):
+                        pr.println("Enter the Product Name");pr.flush();
+                        product_name = brinp.readLine();
+                        query = "select quantity,product_ID from products where product_name = '" +  product_name + "';";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        int  total_quantity = 0;
+                        if(rs.next()) {
+                            total_quantity = rs.getInt(1);
+                            productID = rs.getInt(2);
+                        }
+                        pr.println("Enter the quantity to add");pr.flush();
+                        quantity = Integer.parseInt(brinp.readLine());
+                        System.out.println(total_quantity);
+                        System.out.println(quantity);
+                        if(total_quantity < quantity){
+                            pr.println("Sorry, Quantity not available"); pr.flush(); System.out.println("qty not changed");
+                            break;
+                        }else if(quantity == 0){
+                            query = "SELECT cart_id FROM client WHERE Email='" + email + "';";
+                            System.out.println("sql : " + query);
+                            rs = Server.stmt.executeQuery(query);
+                            System.out.println("query is done");
+                            if (rs.next()) cart_id = rs.getInt(1);
+                            query = "DELETE FROM cart_item WHERE cart_id= " + cart_id + " AND product_ID= " + productID +" ;";
+                            System.out.println("sql : " + query);
+                            Server.preparedStmt = Server.con.prepareStatement(query);
+                            Server.preparedStmt.execute();
+                            System.out.println("Product removed");
+                            pr.println("Product removed");pr.flush();
+                            break;
+                        }
+                        query = "update cart_item CI, Client C set qty = " + quantity + " where C.cart_id = CI.cart_id And product_id = " +  productID + " And email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        pr.println("Done"); pr.flush(); System.out.println("qty changed");
+                        break;
+                                
                      case("user dec cart"):
                         pr.println("Enter the Product ID"); pr.flush();
                         productID = Integer.parseInt(brinp.readLine());
