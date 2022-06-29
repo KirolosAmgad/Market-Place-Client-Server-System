@@ -123,7 +123,7 @@ class EchoThread extends Thread {
                             System.out.println("UnSuccessful login, Wrong info"); pr.println("UnSuccessful login, Wrong info"); pr.flush();
                         }
                         break;
-                                        case ("register"):
+                    case ("register"):
                         pr.println("Enter your First Name: ");      pr.flush();     Fname = brinp.readLine();
                         pr.println("Enter your Last Name: ");       pr.flush();     Lname = brinp.readLine();
                         pr.println("Enter your Email: ");           pr.flush();     email = brinp.readLine();
