@@ -229,7 +229,7 @@ class EchoThread extends Thread {
                         pr.println("Done"); pr.flush();
                         System.out.println("Sent data successfully");
                         break;
- case ("search"):
+                    case ("search"):
                         pr.println("Enter the product name you want to search for"); pr.flush();
                         String search = brinp.readLine();
                         pr.println("Sending results");pr.flush();
