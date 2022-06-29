@@ -21,10 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -64,10 +61,15 @@ public class CartController implements Initializable {
     public static String cart_data_info = "";
 
     public static Float total;
+    @FXML
+    private TextField new_qty;
+    @FXML
+    private ComboBox<String> cart_items_list;
 
     @FXML
     private Label wallet;
     ObservableList<items> list = FXCollections.observableArrayList();
+    ObservableList<String> names_list = FXCollections.observableArrayList();
     private String Fname;
     private String Lname;
 
@@ -118,18 +120,20 @@ public class CartController implements Initializable {
     @FXML
     void purchase(MouseEvent event) throws IOException {
         Main.SendToServer("purchase");
-        while (!Client.server_sent_message.equals("Done")&&!Client.server_sent_message.equals("No items in cart")&&!Client.server_sent_message.equals("Sorry, Items aren't available anymore")){
+        while (!Client.server_sent_message.equals("Done")&&!Client.server_sent_message.equals("No items in cart")&&!Client.server_sent_message.equals("Sorry, Items aren't available anymore")&&!Client.server_sent_message.equals("Not Enough Balance")){
             Client.server_sent_message = Client.bf.readLine();
             System.out.println(Client.server_sent_message);
         }
         if (Client.server_sent_message.equals("Done")){
             Main.SendToServer("get wallet balance");
             Main.msgbox("Balance Update","Your new Balance is: " + Client.server_sent_message);
-            Main.msgbox("Purchase Done","Your order will be delivered from 2 to 4 working days\nThank You!");
+            Main.msgbox("Purchase Done","Your order will be delivered from 2 to 4 working hours\nThank You!");
         } else if (Client.server_sent_message.equals("No items in cart")) {
             Main.msgbox("Error","No items in your cart\nPlease Fill your cart and try again");
         } else if (Client.server_sent_message.equals("Sorry, Items aren't available anymore")) {
             Main.msgbox("Error","Sorry your cart items are no longer available in our stock..");
+        } else if (Client.server_sent_message.equals("Not Enough Balance")){
+            Main.msgbox("Error","Sorry your balance is not enough to complete the purchase");
         }
         root = FXMLLoader.load(getClass().getResource("../views/market.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -143,6 +147,107 @@ public class CartController implements Initializable {
         Main.SendToServer("get wallet balance");
     }
 
+    @FXML
+    void change_qty(MouseEvent event) throws IOException {
+        try{
+            int newQty = Integer.parseInt(new_qty.getText());
+            if (newQty < 0 ){
+                Main.msgbox("Error","Please Enter a non-negative number");
+                return;
+            }
+            if (cart_items_list.getValue() == null){
+                Main.msgbox("Error","Please Specify item to update");
+                return;
+            }
+            Main.SendToServer("user edit cart");
+            Main.SendToServer(cart_items_list.getValue());
+            Main.SendToServer(Integer.toString(newQty));
+            if (Client.server_sent_message.equals("Sorry, Quantity not available")){
+                Main.msgbox("Error","Sorry, Quantity requested not available");
+                return;
+            } else if (Client.server_sent_message.equals("Product removed")){
+                Main.msgbox("Request Successful","the selected item has been deleted from your cart");
+            } else  if (Client.server_sent_message.equals("Done")){
+                Main.msgbox("Request Successful","Selected product quantity has been changed");
+            }
+            cart_table.getItems().clear();
+            cart_items_list.getItems().clear();
+            update_cart();
+        }catch (NumberFormatException e){
+            Main.msgbox("Error","Please Enter a valid number");
+        }
+
+
+
+    }
+    @FXML
+    void delete_item(MouseEvent event) throws IOException {
+        if (cart_items_list.getValue() == null){
+            Main.msgbox("Error","Please Specify item to delete");
+            return;
+        }
+        Main.SendToServer("remove from cart");
+        Main.SendToServer(cart_items_list.getValue());
+        Main.msgbox("Operation","Deleted");
+        cart_table.getItems().clear();
+        cart_items_list.getItems().clear();
+        update_cart();
+    }
+    public void update_cart() throws IOException {
+        List<Integer> product_IDs = new ArrayList<Integer>();
+        List<Integer> qty = new ArrayList<Integer>();
+        List<String> product_name = new ArrayList<String>();
+        List<String> product_category = new ArrayList<String>();
+        List<Float> price = new ArrayList<Float>();
+        List<Float> sub_total = new ArrayList<>();
+        try {
+            Main.SendToServer("view cart items");
+            while (!Client.server_sent_message.equals("Done")) {
+                qty.add(Integer.parseInt(Client.server_sent_message));
+                Main.ReadFromServer();
+
+                Main.ReadFromServer();
+
+                product_IDs.add(Integer.parseInt(Client.server_sent_message));
+                Main.ReadFromServer();
+            }
+            System.out.println(product_IDs);
+
+            total = Float.valueOf(0);
+
+            for (int i = 0; i < product_IDs.size(); i++) {
+                Main.SendToServer("get product info");
+                System.out.println(product_IDs.get(i));
+                Main.SendToServer(Integer.toString(product_IDs.get(i)));
+                product_name.add(Client.server_sent_message);
+
+                Main.ReadFromServer();
+                product_category.add(Client.server_sent_message);
+
+                Main.ReadFromServer();
+                price.add(Float.parseFloat(Client.server_sent_message));
+
+                Main.ReadFromServer();
+                sub_total.add(price.get(i) * qty.get(i));
+                total += sub_total.get(i);
+
+                items p = new items(qty.get(i), product_name.get(i), product_category.get(i), price.get(i), sub_total.get(i));
+                list.add(p);
+                names_list.add(p.product_name);
+            }
+            Quantity.setCellValueFactory(new PropertyValueFactory<items, Integer>("quantity"));
+            Product.setCellValueFactory(new PropertyValueFactory<items, String>("product_name"));
+            Category.setCellValueFactory(new PropertyValueFactory<items, String>("category"));
+            Price.setCellValueFactory(new PropertyValueFactory<items, Float>("price"));
+            Subtotal.setCellValueFactory(new PropertyValueFactory<items, Float>("subtotal"));
+            cart_table.setItems(list);
+            cart_items_list.setItems(names_list);
+            String s = String.format("%.2f",total);
+            total_placeholder.setText(s + " EGP");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public class items {
         private int quantity;
         private String product_name;
@@ -207,69 +312,12 @@ public class CartController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        List<Integer> product_IDs = new ArrayList<Integer>();;
-        List<Integer> qty = new ArrayList<Integer>();
-        List<String> product_name = new ArrayList<String>();
-        List<String> product_category = new ArrayList<String>();
-        List<Float> price = new ArrayList<Float>();
-        List<Float> sub_total = new ArrayList<>();
         try {
-            Main.SendToServer("view cart items");
-            while (!Client.server_sent_message.equals("Done")){
-                qty.add(Integer.parseInt(Client.server_sent_message));
-                Client.server_sent_message = Client.bf.readLine();
-                System.out.println(Client.server_sent_message);
-
-                Client.server_sent_message = Client.bf.readLine();
-                System.out.println(Client.server_sent_message);
-
-                product_IDs.add(Integer.parseInt(Client.server_sent_message));
-                Client.server_sent_message = Client.bf.readLine();
-                System.out.println(Client.server_sent_message);
-            }
-            System.out.println(product_IDs);
-
-            total = Float.valueOf(0);
-
-            for (int i=0; i< product_IDs.size(); i++){
-                Main.SendToServer("get product info");
-                System.out.println(product_IDs.get(i));
-                Main.SendToServer(Integer.toString(product_IDs.get(i)));
-                product_name.add(Client.server_sent_message);
-
-                Client.server_sent_message = Client.bf.readLine();
-                System.out.println(Client.server_sent_message);
-                product_category.add(Client.server_sent_message);
-
-                Client.server_sent_message = Client.bf.readLine();
-                System.out.println(Client.server_sent_message);
-                price.add(Float.parseFloat(Client.server_sent_message));
-
-                Client.server_sent_message = Client.bf.readLine();
-                System.out.println(Client.server_sent_message);
-                sub_total.add(price.get(i)*qty.get(i));
-                total += sub_total.get(i);
-
-                items p = new items(qty.get(i), product_name.get(i),product_category.get(i),price.get(i),sub_total.get(i));
-                list.add(p);
-            }
-            Quantity.setCellValueFactory(new PropertyValueFactory<items,Integer>("quantity"));
-            Product.setCellValueFactory(new PropertyValueFactory<items,String>("product_name"));
-            Category.setCellValueFactory(new PropertyValueFactory<items,String>("category"));
-            Price.setCellValueFactory(new PropertyValueFactory<items,Float>("price"));
-            Subtotal.setCellValueFactory(new PropertyValueFactory<items,Float>("subtotal"));
-            cart_table.setItems(list);
-            String s = String.format("%.2f",total);
-            total_placeholder.setText(s + " EGP");
-            cart_data_info = "Quantity   Product Name    Category   Price\n";
-            for (int i=0; i<product_IDs.size(); i++){
-                cart_data_info += qty.get(i)+"  "+ product_name.get(i)+"    "+ product_category.get(i)+"    "+ price.get(i) +"\n";
-            }
-            System.out.println(cart_data_info);
+            update_cart();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 }
 
