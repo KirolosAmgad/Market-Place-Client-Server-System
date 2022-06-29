@@ -469,8 +469,8 @@ class EchoThread extends Thread {
                         Server.preparedStmt.execute();
                         pr.println("Done"); pr.flush(); System.out.println("qty changed");
                         break;
- case("purchase"):
-
+                                   
+                     case("purchase"):
                         synchronized(Server.thrd){
                             query = "select CI.*, p.price, p.quantity from client AS C, cart_item as CI, products as p where C.cart_id = CI.cart_id and p.product_ID = CI.product_ID and email='" + email + "';";
                             rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
