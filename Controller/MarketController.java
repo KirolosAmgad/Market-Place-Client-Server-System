@@ -1,6 +1,5 @@
 package Controller;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,7 +13,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import main.Main;
 import main.MyListener;
-import model.Fruit;
+import model.Product;
 
 import java.io.*;
 import java.net.URL;
@@ -28,8 +27,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
-
 public class MarketController implements Initializable {
     
          private Stage stage;
@@ -38,16 +35,16 @@ public class MarketController implements Initializable {
     @FXML
     private Label wallet;
     @FXML
-    private VBox chosenFruitCard;
+    private VBox chosenProductCard;
 
     @FXML
-    private Label fruitNameLable;
+    private Label productNameLable;
 
     @FXML
-    private Label fruitPriceLabel;
+    private Label productPriceLabel;
 
     @FXML
-    private ImageView fruitImg;
+    private ImageView productImg;
 
     @FXML
     private ScrollPane scroll;
@@ -63,7 +60,7 @@ public class MarketController implements Initializable {
     private Spinner<Integer> spinner;
 
     int currentValue;
-    private List<Fruit> fruits = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
     private Image image;
     private MyListener myListener;
     @FXML
@@ -74,7 +71,7 @@ public class MarketController implements Initializable {
 
     @FXML
     void add_to_cart(MouseEvent event) throws IOException {
-        String product_name = fruitNameLable.getText();
+        String product_name = productNameLable.getText();
         Main.SendToServer("get product id from name");
         String product_id = Main.SendToServer(product_name);
         Main.SendToServer("add to cart");
@@ -124,7 +121,7 @@ public class MarketController implements Initializable {
         stage.show();
     }
 
-    private List<Fruit> getData() throws IOException {
+    private List<Product> getData() throws IOException {
         List<Integer> product_IDs = new ArrayList<Integer>();;
         List<Integer> qty = new ArrayList<Integer>();
         List<String> product_name = new ArrayList<String>();
@@ -151,34 +148,34 @@ public class MarketController implements Initializable {
 //            Client.bf = new BufferedReader(new InputStreamReader(Client.s.getInputStream()));
         }
 
-        List<Fruit> fruits = new ArrayList<>();
-        Fruit fruit;
+        List<Product> products = new ArrayList<>();
+        Product product;
 
         for (int i=0;i<product_IDs.size();i++){
-            fruit = new Fruit();
-            fruit.setName(product_name.get(i));
-            fruit.setPrice(price.get(i));
-            fruit.setImgSrc(imgsrc.get(i));
-            fruit.setColor(color.get(i));
-            fruit.setID(product_IDs.get(i));
-            fruits.add(fruit);
+            product = new Product();
+            product.setName(product_name.get(i));
+            product.setPrice(price.get(i));
+            product.setImgSrc(imgsrc.get(i));
+            product.setColor(color.get(i));
+            product.setID(product_IDs.get(i));
+            products.add(product);
         }
 
-//        fruit = new Fruit();
-//        fruit.setName("Chipsey");
-//        fruit.setPrice(8.5);
-//        fruit.setImgSrc("/img/chipsey.png");
-//        fruit.setColor("E7C00F");
-//        fruits.add(fruit);
-        return fruits;
+//        product = new Fruit();
+//        product.setName("Chipsey");
+//        product.setPrice(8.5);
+//        product.setImgSrc("/img/chipsey.png");
+//        product.setColor("E7C00F");
+//        products.add(product);
+        return products;
     }
 
-    private void setChosenFruit(Fruit fruit) {
-        fruitNameLable.setText(fruit.getName());
-        fruitPriceLabel.setText(fruit.getPrice() + " " +Main.CURRENCY);
-        image = new Image(getClass().getResourceAsStream(fruit.getImgSrc()));
-        fruitImg.setImage(image);
-        chosenFruitCard.setStyle("-fx-background-color: #" + fruit.getColor() + ";\n" +
+    private void setChosenProduct(Product product) {
+        productNameLable.setText(product.getName());
+        productPriceLabel.setText(product.getPrice() + " " +Main.CURRENCY);
+        image = new Image(getClass().getResourceAsStream(product.getImgSrc()));
+        productImg.setImage(image);
+        chosenProductCard.setStyle("-fx-background-color: #" + product.getColor() + ";\n" +
                 "    -fx-background-radius: 30;");
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100);
         valueFactory.setValue(1);
@@ -215,11 +212,11 @@ public class MarketController implements Initializable {
             return;
         }
         grid.getChildren().clear();
-        List<Fruit> fruits = new ArrayList<>();
-        Fruit fruit;
+        List<Product> fruits = new ArrayList<>();
+        Product fruit;
 
         for (int i=0;i<product_IDs.size();i++){
-            fruit = new Fruit();
+            fruit = new Product();
             fruit.setName(product_name.get(i));
             fruit.setPrice(price.get(i));
             fruit.setImgSrc(imgsrc.get(i));
@@ -229,12 +226,12 @@ public class MarketController implements Initializable {
         }
 
         if (fruits.size() > 0) {
-            setChosenFruit(fruits.get(0));
+            setChosenProduct(fruits.get(0));
 
             myListener = new MyListener() {
                 @Override
-                public void onClickListener(Fruit fruit) {
-                    setChosenFruit(fruit);
+                public void onClickListener(Product fruit) {
+                    setChosenProduct(fruit);
                 }
             };
         }
@@ -277,30 +274,30 @@ public class MarketController implements Initializable {
         valueFactory.setValue(1);
         spinner.setValueFactory(valueFactory);
         try {
-            fruits.addAll(getData());
+            products.addAll(getData());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (fruits.size() > 0) {
-            setChosenFruit(fruits.get(0));
+        if (products.size() > 0) {
+            setChosenProduct(products.get(0));
 
             myListener = new MyListener() {
                 @Override
-                public void onClickListener(Fruit fruit) {
-                    setChosenFruit(fruit);
+                public void onClickListener(Product fruit) {
+                    setChosenProduct(fruit);
                 }
             };
         }
         int column = 0;
         int row = 1;
         try {
-            for (int i = 0; i < fruits.size(); i++) {
+            for (int i = 0; i < products.size(); i++) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/views/item.fxml"));
                 AnchorPane anchorPane = fxmlLoader.load();
 
                 ItemController itemController = fxmlLoader.getController();
-                itemController.setData(fruits.get(i),myListener); //images.get(i)
+                itemController.setData(products.get(i),myListener); //images.get(i)
 
                 if (column == 3) {
                     column = 0;
