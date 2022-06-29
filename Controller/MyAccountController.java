@@ -23,6 +23,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Main;
+import model.Order;
+import model.item;
 
 public class MyAccountController implements Initializable {
 
@@ -100,112 +102,8 @@ public class MyAccountController implements Initializable {
     @FXML
     private Button pass_confirm_button;
 
-    public class item {
-        private String name;
-        private Integer qty;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Integer getQty() {
-            return qty;
-        }
-
-        public void setQty(Integer qty) {
-            this.qty = qty;
-        }
-
-        public item(String name, Integer qty) {
-            this.name = name;
-            this.qty = qty;
-        }
-    }
 private ObservableList<Order> list = FXCollections.observableArrayList();
 
-    public class Order  {
-        private Integer id;
-        private float total;
-        private String date;
-        private ArrayList<item> products;
-        private String qty;
-        private String name;
-        //private String [] names;
-        //private Integer [] qtys;
-
-        public Order(int id, float total, String date, ArrayList<item> products) {
-            this.id = id;
-            this.total = total;
-            this.date = date;
-            this.products = products;
-        }
-
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public float getTotal() {
-            return total;
-        }
-
-        public void setTotal(float total) {
-            this.total = total;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        public ArrayList<item> getProducts() {
-            return products;
-        }
-
-        public void setProducts(ArrayList<item> products) {
-            this.products = products;
-        }
-
-
-
-        public void setQty() {
-            this.qty="";
-            for (item product : products){
-                this.qty= this.qty  + Integer.toString(product.getQty()) +"\n";
-            }
-        }
-
-        public String getQty() {
-            return qty;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        /**
-         *
-         */
-        public void setName() {
-            this.name="";
-            for (item product : products){
-                this.name= this.name + product.getName() +"\n " ;
-            }
-        }
-
-
-    }
 
     public void setarrays(Order o){
         o.setName();
@@ -232,7 +130,7 @@ private ObservableList<Order> list = FXCollections.observableArrayList();
         Fname = Main.SendToServer("view profile");
         Lname = Main.ReadFromServer();
         String email = Main.ReadFromServer();
-        String pass = Main.ReadFromServer();
+        Main.ReadFromServer();
         String mobile = Main.ReadFromServer();
         String birthday = Main.ReadFromServer();
         String gender = Main.ReadFromServer();
@@ -287,8 +185,6 @@ private ObservableList<Order> list = FXCollections.observableArrayList();
         add_balanace_button.setVisible(false);
         amount_money.setVisible(false);
         Main.SendToServer("view orders");
-        String orders = "";
-        int i=0;
         boolean flag = true;
         while (!Main.ReadFromServer().equals("Done")){
             date.add(Client.server_sent_message);
@@ -297,11 +193,10 @@ private ObservableList<Order> list = FXCollections.observableArrayList();
             qty.add(Integer.parseInt(Main.ReadFromServer()));
             product_name.add(Main.ReadFromServer());
             order_id.add(Integer.parseInt(Main.ReadFromServer()));
-            orders += date.get(i)+ " "+ address.get(i)+" "+ price.get(i)+" "+qty.get(i)+" "+product_name.get(i)+" "+order_id.get(i)+"\n";
-            i++;
             flag=false;
         }
-        if (flag) orders = "You have no recent orders on your account";
+        if (flag) {
+        }
 
         ArrayList<Order> AllOrders = new ArrayList<Order>();
         ArrayList<item> productsForId = new ArrayList<item>();
