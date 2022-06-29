@@ -1,3 +1,9 @@
+-- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
+--
+-- Host: localhost    Database: market place
+-- ------------------------------------------------------
+-- Server version	8.0.29
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -9,7 +15,9 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-/* Table structure for table `admin` */
+--
+-- Table structure for table `admin`
+--
 
 DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -25,18 +33,20 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
-/* Dumping data for table `admin` */
+--
+-- Dumping data for table `admin`
+--
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` 
+INSERT INTO `admin`
 VALUES ('Joshua','Garth','admin@emarket.net','admin1234',1,7401.25);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-/* Table structure for table `cart_item` */
+--
+-- Table structure for table `cart_item`
+--
 
 DROP TABLE IF EXISTS `cart_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -52,11 +62,13 @@ CREATE TABLE `cart_item` (
 ) ENGINE=InnoDB AUTO_INCREMENT=968221 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-/* Dumping data for table `cart_item` */
+--
+-- Dumping data for table `cart_item`
+--
 
 LOCK TABLES `cart_item` WRITE;
 /*!40000 ALTER TABLE `cart_item` DISABLE KEYS */;
-INSERT INTO `cart_item` 
+INSERT INTO `cart_item`
 VALUES (4,5,4),
 (3,5,6),
 (3,6,50),
@@ -68,8 +80,9 @@ VALUES (4,5,4),
 /*!40000 ALTER TABLE `cart_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-/* Table structure for table `client` */
+--
+-- Table structure for table `client`
+--
 
 DROP TABLE IF EXISTS `client`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -87,14 +100,16 @@ CREATE TABLE `client` (
   `cart_id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`Email`),
   UNIQUE KEY `cart_id_UNIQUE` (`cart_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-/* Dumping data for table `client` */
+--
+-- Dumping data for table `client`
+--
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` 
+INSERT INTO `client`
 VALUES ('Claire','Bassem','claire@gmail.com','koko1234','01277089618',6940,'23-10-1999','F','heliopolis',15),
 ('Teegan','Brenden','donec.non@google.couk','YYL02UVV8WG','(584) 218-2715',6029,'25-02-23','\'F\'','Ap #737-6657 Neque. Ave',1),
 ('Cole','Hope','dui@aol.ca','XWN68XHG3VV','1-345-681-2629',7077,'20-06-21','\'M\'','676-3452 Nibh. Street',2),
@@ -112,8 +127,9 @@ VALUES ('Claire','Bassem','claire@gmail.com','koko1234','01277089618',6940,'23-1
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-/* Table structure for table `order` */
+--
+-- Table structure for table `order`
+--
 
 DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -127,7 +143,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`id`),
   KEY `client_email` (`client_email`),
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`client_email`) REFERENCES `client` (`Email`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +152,8 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (6,'el zatoun el dor el talet',90,'john@gmail.com','2022-05-25 17:16:54.87'),
+INSERT INTO `order`
+VALUES (6,'el zatoun el dor el talet',90,'john@gmail.com','2022-05-25 17:16:54.87'),
 (7,'el zatoun el dor el talet',401.89,'john@gmail.com','2022-05-27 17:16:54.87'),
 (8,'el zatoun el dor el talet',125.43,'john@gmail.com','2022-05-26 17:16:54.87'),
 (9,'masr el gedida el dor el 5ames',134.04,'mark@gmail.com','2022-05-28 17:16:54.87'),
@@ -163,8 +180,9 @@ INSERT INTO `order` VALUES (6,'el zatoun el dor el talet',90,'john@gmail.com','2
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-/* Table structure for table `order_item` */
+--
+-- Table structure for table `order_item`
+--
 
 DROP TABLE IF EXISTS `order_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -186,7 +204,8 @@ CREATE TABLE `order_item` (
 
 LOCK TABLES `order_item` WRITE;
 /*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
-INSERT INTO `order_item` VALUES (40,2,6,50),
+INSERT INTO `order_item`
+VALUES (40,2,6,50),
 (50,10,6,458),
 (90.21,3,7,38031),
 (311.68,4,7,563471),
@@ -242,8 +261,9 @@ INSERT INTO `order_item` VALUES (40,2,6,50),
 /*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-/* Table structure for table `products` */
+--
+-- Table structure for table `products`
+--
 
 DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -267,7 +287,8 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (69,'Fish',25,'Tuna',1,'/img/tuna.png','87CEFA'),
+INSERT INTO `products`
+VALUES (69,'Fish',25,'Tuna',1,'/img/tuna.png','87CEFA'),
 (72,'Fruits',8.95,'Strawberry',2,'/img/strawberry.png','FFEFD5'),
 (93,'Fruits',17.95,'Watermelon',3,'/img/watermelon.png','FFDAB9'),
 (92,'Snacks',4.9,'Indomie',4,'/img/indomie.png','98FB98'),
@@ -293,3 +314,5 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-06-29  0:42:44
