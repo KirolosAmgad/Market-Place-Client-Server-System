@@ -210,6 +210,7 @@ class EchoThread extends Thread {
                         pr.println("Done");pr.flush();
                         System.out.println("The Money isadded successfully");
                         break;
+                                   
                  case ("view orders"):
                         query = " SELECT date,address, `order`.price, qty, product_name, id\n" +
                                 "FROM `order`, order_item, products\n" +
@@ -229,6 +230,7 @@ class EchoThread extends Thread {
                         pr.println("Done"); pr.flush();
                         System.out.println("Sent data successfully");
                         break;
+                                   
                     case ("search"):
                         pr.println("Enter the product name you want to search for"); pr.flush();
                         String search = brinp.readLine();
