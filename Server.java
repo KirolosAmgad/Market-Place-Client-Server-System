@@ -106,3 +106,20 @@ class EchoThread extends Thread {
             try {
                 String client_sent_message = brinp.readLine();
                 System.out.println("Client " + client_id + " : " + client_sent_message);
+                                 switch (client_sent_message) {
+
+                    // User Interface Backend
+                    case ("login"):
+                        pr.println("Enter your email: ");   pr.flush();     email = brinp.readLine();
+                        pr.println("Enter your Pass: ");    pr.flush();     password = brinp.readLine();
+
+                        System.out.println("Email :" + email);
+                        System.out.println("Password :" + password);
+
+                        rs = Server.stmt.executeQuery("SELECT email, password FROM client WHERE email='" + email + "' AND password = '" + password + "';");
+                        if (rs.next()) {
+                            System.out.println("Successful Login"); pr.println("Successful Login"); pr.flush();
+                        } else {
+                            System.out.println("UnSuccessful login, Wrong info"); pr.println("UnSuccessful login, Wrong info"); pr.flush();
+                        }
+                        break;
