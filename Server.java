@@ -411,7 +411,24 @@ class EchoThread extends Thread {
                         pr.println("Done"); pr.flush();
                         System.out.println("Cart items retrieved successfully");
                         break;                                  
+
+                    case ("remove from cart"):
                                    
+                        pr.println("Enter product name to be removed"); pr.flush(); product_name = brinp.readLine();
+                        query = "SELECT cart_id FROM client WHERE Email='" + email + "';";
+                        rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
+                        if (rs.next()) cart_id=rs.getInt(1);
+
+                        query = "SELECT product_id from products where product_name = '" + product_name + "';";
+                        rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
+                        if (rs.next())  productID = rs.getInt(1);
+                        
+                        query = "DELETE FROM cart_item WHERE cart_id= " + cart_id + " AND product_ID= " + productID +" ;";
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        System.out.println("Product removed");
+                        pr.println("Done"); pr.flush();
+                        break; 
                      case("user dec cart"):
                         pr.println("Enter the Product ID"); pr.flush();
                         productID = Integer.parseInt(brinp.readLine());
