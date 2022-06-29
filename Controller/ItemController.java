@@ -1,6 +1,5 @@
 package Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -8,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import main.Main;
 import main.MyListener;
-import model.Fruit;
+import model.Product;
 
 import java.io.IOException;
 
@@ -27,15 +26,15 @@ public class ItemController {
         myListener.onClickListener(fruit);
     }
 
-    private Fruit fruit;
+    private Product fruit;
     private MyListener myListener;
 
-    public void setData(Fruit fruit, MyListener myListener) {//, Image prdImg
-        this.fruit = fruit;
+    public void setData(Product product, MyListener myListener) {//, Image prdImg
+        this.fruit = product;
         this.myListener = myListener;
-        nameLabel.setText(fruit.getName());
-        priceLable.setText(fruit.getPrice() + " " +Main.CURRENCY);
-        Image image = new Image(getClass().getResourceAsStream(fruit.getImgSrc()));
+        nameLabel.setText(product.getName());
+        priceLable.setText(product.getPrice() + " " +Main.CURRENCY);
+        Image image = new Image(getClass().getResourceAsStream(product.getImgSrc()));
         img.setImage(image); //prdImg
     }
 }
