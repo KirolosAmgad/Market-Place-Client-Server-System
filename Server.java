@@ -268,3 +268,12 @@ class EchoThread extends Thread {
                         rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
                         if(rs.next()) { pr.println(rs.getFloat(1)); pr.flush(); }
                         break;
+                   case ("add products in stock"):
+                        pr.println("Enter Product ID");     pr.flush();     productID = Integer.parseInt(brinp.readLine());
+                        pr.println("Enter added quantity"); pr.flush();     quantity = Integer.parseInt(brinp.readLine());
+                        query = "update products set quantity = quantity + " + quantity + " where product_ID = " + productID + ";";
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute(); System.out.println("sql : " + query);
+                        pr.println("Done");pr.flush(); System.out.println("Data updated successfully from admin");
+                        break;
+
