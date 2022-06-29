@@ -20,10 +20,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.Main;
 
-/**
- *
- * @author Mariz
- */
+
+
+
+
 public class SignUpController {
      private Stage stage;
  private Scene scene;
