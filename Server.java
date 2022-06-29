@@ -210,3 +210,22 @@ class EchoThread extends Thread {
                         pr.println("Done");pr.flush();
                         System.out.println("The Money isadded successfully");
                         break;
+                 case ("view orders"):
+                        query = " SELECT date,address, `order`.price, qty, product_name, id\n" +
+                                "FROM `order`, order_item, products\n" +
+                                "WHERE order_item.order_id = `order`.id &&\n" +
+                                "products.product_ID = order_item.product_ID &&\n" +
+                                "client_email = '" + email + "';";
+                                rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
+                        pr.println("OK .. there is the orders");pr.flush();
+                        while(rs.next()){
+                            pr.println(rs.getString(1));pr.flush();
+                            pr.println(rs.getString(2));pr.flush();
+                            pr.println(rs.getFloat(3));pr.flush();
+                            pr.println(rs.getInt(4));pr.flush();
+                            pr.println(rs.getString(5));pr.flush();
+                            pr.println(rs.getInt(6));pr.flush();
+                        }
+                        pr.println("Done"); pr.flush();
+                        System.out.println("Sent data successfully");
+                        break;
