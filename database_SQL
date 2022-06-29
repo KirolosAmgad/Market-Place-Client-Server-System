@@ -26,6 +26,16 @@ CREATE TABLE `admin` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
+/* Dumping data for table `admin` */
+
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` 
+VALUES ('Joshua','Garth','admin@emarket.net','admin1234',1,7401.25);
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 /* Table structure for table `cart_item` */
 
 DROP TABLE IF EXISTS `cart_item`;
@@ -41,6 +51,22 @@ CREATE TABLE `cart_item` (
   CONSTRAINT `cart_item_ibfk_2` FOREIGN KEY (`product_ID`) REFERENCES `products` (`product_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=968221 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+/* Dumping data for table `cart_item` */
+
+LOCK TABLES `cart_item` WRITE;
+/*!40000 ALTER TABLE `cart_item` DISABLE KEYS */;
+INSERT INTO `cart_item` 
+VALUES (4,5,4),
+(3,5,6),
+(3,6,50),
+(2,8,1),
+(20,10,5),
+(3,14,50),
+(4,16,2),
+(3,17,50);
+/*!40000 ALTER TABLE `cart_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 /* Table structure for table `client` */
@@ -63,6 +89,28 @@ CREATE TABLE `client` (
   UNIQUE KEY `cart_id_UNIQUE` (`cart_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+/* Dumping data for table `client` */
+
+LOCK TABLES `client` WRITE;
+/*!40000 ALTER TABLE `client` DISABLE KEYS */;
+INSERT INTO `client` 
+VALUES ('Claire','Bassem','claire@gmail.com','koko1234','01277089618',6940,'23-10-1999','F','heliopolis',15),
+('Teegan','Brenden','donec.non@google.couk','YYL02UVV8WG','(584) 218-2715',6029,'25-02-23','\'F\'','Ap #737-6657 Neque. Ave',1),
+('Cole','Hope','dui@aol.ca','XWN68XHG3VV','1-345-681-2629',7077,'20-06-21','\'M\'','676-3452 Nibh. Street',2),
+('Tyler','Renee','eu.dui@icloud.couk','JFF27TOF9NG','(430) 443-4798',6138,'02-12-22','\'M\'','833-2295 Et, Avenue',3),
+('Cain','Garrett','facilisis.magna@protonmail.edu','PHP18NOY4CM','(642) 883-5136',6688,'17-11-22','\'F\'','Ap #512-8428 Et, Rd.',4),
+('Farah','Ihab','foffa@gmail.com','foffa1234','01200762343',3000,'25-08-1999','F','masr el gedida el dor el awal',17),
+('john','magdy','john@gmail.com','haha1234','01288485284',100000000000,'16/1/2000','M','el zatoun el dor el talet',5),
+('karen','bassem','karen@gmail.com','123456458','01329865189',999919,'05-05-2022','F','masr',13),
+('Kiro','Amgad','kiro@hotmail.com','kiro1234','01202749339',999725,'12-05-1999','M','rehab',8),
+('Mathew','Ehab','M@gmail.com','mathew1234','01202548926',5600,'16/10/1999','M','masr el gedida el dor el tani',6),
+('Mariz','Ghaly','mariz@gmail.com','12345678','01065845875',6127.38,'01-01-2000','F','obour',10),
+('Mark','George','mark@gmail.com','mark1234','01258974869',1000370,'01-05-2022','M','masr el gedida el dor el 5ames',14),
+('Mayar','El-Mallah','mayar@gmail.com','mayar1234','01141863698',9879.22,'30-03-2000','F','el abbaseya',16),
+('Angelica','India','ut.lacus@icloud.com','PCJ24EKY7XB','1-448-362-6516',5822,'28-12-22','\'F\'','Ap #337-1961 Mauris Ave',7);
+/*!40000 ALTER TABLE `client` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 /* Table structure for table `order` */
