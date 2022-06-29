@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.Main;
 import main.MyListener;
-import model.Fruit;
+import model.Product;
 
 public class MarketAdminController implements Initializable {
 
@@ -47,7 +47,7 @@ public class MarketAdminController implements Initializable {
     @FXML
     private GridPane grid;
 
-    private List<Fruit> fruits = new ArrayList<>();
+    private List<Product> fruits = new ArrayList<>();
     private Image image;
     private MyListener myListener;
 
@@ -61,6 +61,11 @@ public class MarketAdminController implements Initializable {
     private Label quantity_label;
     @FXML
     private TextField search_text;
+    @FXML
+    private Label balance;
+    void display_wallet_balance() throws IOException {
+        balance.setText("Balance: "+Main.SendToServer("get admin balance") + " EGP");
+    }
 
     @FXML
     void logout(MouseEvent event) throws IOException {
@@ -107,7 +112,7 @@ public class MarketAdminController implements Initializable {
         stage.show();
     }
 
-    private List<Fruit> getData() throws IOException {
+    private List<Product> getData() throws IOException {
         List<Integer> product_IDs = new ArrayList<Integer>();;
         List<Integer> qty = new ArrayList<Integer>();
         List<String> product_name = new ArrayList<String>();
@@ -134,11 +139,11 @@ public class MarketAdminController implements Initializable {
 //            Client.bf = new BufferedReader(new InputStreamReader(Client.s.getInputStream()));
         }
 
-        List<Fruit> fruits = new ArrayList<>();
-        Fruit fruit;
+        List<Product> fruits = new ArrayList<>();
+        Product fruit;
 
         for (int i=0;i<product_IDs.size();i++){
-            fruit = new Fruit();
+            fruit = new Product();
             fruit.setName(product_name.get(i));
             fruit.setPrice(price.get(i));
             fruit.setImgSrc(imgsrc.get(i));
@@ -156,7 +161,7 @@ public class MarketAdminController implements Initializable {
         return fruits;
     }
 
-    private void setChosenFruit(Fruit fruit) throws IOException {
+    private void setChosenFruit(Product fruit) throws IOException {
         fruitNameLable.setText(fruit.getName());
         fruitPriceLabel.setText(fruit.getPrice() + " " +Main.CURRENCY);
         image = new Image(getClass().getResourceAsStream(fruit.getImgSrc()));
@@ -197,11 +202,11 @@ public class MarketAdminController implements Initializable {
             return;
         }
         grid.getChildren().clear();
-        List<Fruit> fruits = new ArrayList<>();
-        Fruit fruit;
+        List<Product> fruits = new ArrayList<>();
+        Product fruit;
 
         for (int i=0;i<product_IDs.size();i++){
-            fruit = new Fruit();
+            fruit = new Product();
             fruit.setName(product_name.get(i));
             fruit.setPrice(price.get(i));
             fruit.setImgSrc(imgsrc.get(i));
@@ -215,7 +220,7 @@ public class MarketAdminController implements Initializable {
 
             myListener = new MyListener() {
                 @Override
-                public void onClickListener(Fruit fruit) throws IOException {
+                public void onClickListener(Product fruit) throws IOException {
                     setChosenFruit(fruit);
                 }
             };
@@ -257,6 +262,11 @@ public class MarketAdminController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            display_wallet_balance();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
             fruits.addAll(getData());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -269,7 +279,7 @@ public class MarketAdminController implements Initializable {
             }
             myListener = new MyListener() {
                 @Override
-                public void onClickListener(Fruit fruit) throws IOException {
+                public void onClickListener(Product fruit) throws IOException {
                     setChosenFruit(fruit);
                 }
             };
