@@ -123,7 +123,7 @@ class EchoThread extends Thread {
                             System.out.println("UnSuccessful login, Wrong info"); pr.println("UnSuccessful login, Wrong info"); pr.flush();
                         }
                         break;
-                    case ("register"):
+                                        case ("register"):
                         pr.println("Enter your First Name: ");      pr.flush();     Fname = brinp.readLine();
                         pr.println("Enter your Last Name: ");       pr.flush();     Lname = brinp.readLine();
                         pr.println("Enter your Email: ");           pr.flush();     email = brinp.readLine();
@@ -469,8 +469,8 @@ class EchoThread extends Thread {
                         Server.preparedStmt.execute();
                         pr.println("Done"); pr.flush(); System.out.println("qty changed");
                         break;
-                                   
-                     case("purchase"):
+ case("purchase"):
+
                         synchronized(Server.thrd){
                             query = "select CI.*, p.price, p.quantity from client AS C, cart_item as CI, products as p where C.cart_id = CI.cart_id and p.product_ID = CI.product_ID and email='" + email + "';";
                             rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
@@ -598,6 +598,36 @@ class EchoThread extends Thread {
                         Server.preparedStmt.execute();
                         pr.println("Done"); pr.flush(); System.out.println("qty changed");
                         break;   
+                     case("user inc cart"):
+
+                        pr.println("Enter the Product ID");
+                        pr.flush();
+                        productID = Integer.parseInt(brinp.readLine());
+                        query = "select quantity, qty from products P, cart_item CI, Client C where P.product_id = CI.product_id AND C.cart_id = CI.cart_id AND P.product_id = " + productID + " And email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        int total_quantity = 0, cart_quantity = 0;
+                        if(rs.next()) {
+                        total_quantity = rs.getInt(1);
+                        cart_quantity = rs.getInt(2);
+                        }
+                        pr.println("Enter the quantity to add");
+                        pr.flush();
+                        quantity = Integer.parseInt(brinp.readLine());
+                        System.out.println(total_quantity);
+                        System.out.println(cart_quantity);
+                        System.out.println(quantity);
+                        if(total_quantity < cart_quantity + quantity){
+                        pr.println("Sorry, Quantity not available"); pr.flush(); System.out.println("qty not changed");
+                        break;
+                        }
+                        query = "update cart_item CI, Client C set qty = qty + " + quantity + " where C.cart_id = CI.cart_id And product_id = " + productID + " And email='" + email + "';";
+                        System.out.println("sql : " + query);
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        pr.println("Done"); pr.flush(); System.out.println("qty changed");
+                        break;
                                  
                      default: pr.println("Ok"); pr.flush();
                 }
