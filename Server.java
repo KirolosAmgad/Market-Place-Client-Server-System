@@ -367,6 +367,38 @@ class EchoThread extends Thread {
                         System.out.println("Products retrieved successfully");
                         break;
                                    
+                    case ("add to cart"):
+
+                        pr.println("Enter product ID: ");pr.flush(); productID = Integer.parseInt(brinp.readLine());
+                        query = " SELECT `quantity` FROM `products` WHERE product_ID = '" + productID + "';";
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("sql : " + query);
+
+                        if(rs.next()) actual_quantity = rs.getInt(1);
+                        pr.println("Enter quantity (smaller than "+ (actual_quantity+1) +"): "); pr.flush();
+                        quantity = Integer.parseInt(brinp.readLine());
+                        if (quantity > actual_quantity){ pr.println("Unavailable entry"); pr.flush(); break;}
+                        
+                        query = " SELECT `cart_id` FROM `client` WHERE Email = '" + email + "';";
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("sql : " + query);
+
+                        if(rs.next()) cart_id = rs.getInt(1);
+                        
+                        query = "INSERT INTO `cart_item` (qty, cart_id, product_ID) "+ "VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE qty= ?";
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.setInt(1, quantity);
+                        Server.preparedStmt.setInt(2, cart_id);
+                        Server.preparedStmt.setInt(3, productID);
+                        Server.preparedStmt.setInt(4, quantity);
+                        Server.preparedStmt.execute();
+                        System.out.println("sql : " + query);
+                        pr.println("Done"); pr.flush();
+                        System.out.println("Item with ID : " + productID + " is added successfully to cart of the client with email " + email);
+                        break;
+                                   
+                                   
+                                   
                      case("user dec cart"):
                         pr.println("Enter the Product ID"); pr.flush();
                         productID = Integer.parseInt(brinp.readLine());
@@ -406,29 +438,5 @@ class EchoThread extends Thread {
                         Server.preparedStmt = Server.con.prepareStatement(query);
                         Server.preparedStmt.execute();
                         pr.println("Done"); pr.flush(); System.out.println("qty changed");
-                        break;                    case ("view products"):
-                        query = "SELECT * FROM products ;";
-                        System.out.println("sql : " + query);
-                        rs = Server.stmt.executeQuery(query);
-                        pr.println("Products are being retrieved successfully");pr.flush();
-                        while (rs.next()) {
-
-                            pr.println(rs.getInt(1));       pr.flush();
-                            pr.println(rs.getString(2));    pr.flush();
-                            pr.println(rs.getString(3));    pr.flush();
-                            pr.println(rs.getString(4));    pr.flush();
-                            pr.println(rs.getInt(5));       pr.flush();
-                            pr.println(rs.getString(6));    pr.flush();
-                            pr.println(rs.getString(7));    pr.flush();
-
-                            /*ImageIcon imageIcon = new ImageIcon("C:\\Users\\kiro_\\IdeaProjects\\Market\\src\\img\\cherry.png");
-                            Image image = imageIcon.getImage();
-                            brimg = new BufferedImage(image.getWidth(null),image.getHeight(null),BufferedImage.TYPE_INT_ARGB);
-                            bufferedOutputStream.flush();
-                            ImageIO.write(brimg,"png",socket.getOutputStream());bufferedOutputStream.flush();*/
-                        }
-                        pr.println("Done"); pr.flush();
-                        System.out.println("Products retrieved successfully");
-                        break;
-
+                        break;                    
 
