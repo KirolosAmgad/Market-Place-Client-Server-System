@@ -556,7 +556,8 @@ class EchoThread extends Thread {
                             Server.preparedStmt.execute(); System.out.println("sql : " + query);
                             pr.println("Done");pr.flush();
                         }
-                        break;         
+                        break;    
+                                   
                      case("user dec cart"):
                         pr.println("Enter the Product ID"); pr.flush();
                         productID = Integer.parseInt(brinp.readLine());
@@ -596,5 +597,24 @@ class EchoThread extends Thread {
                         Server.preparedStmt = Server.con.prepareStatement(query);
                         Server.preparedStmt.execute();
                         pr.println("Done"); pr.flush(); System.out.println("qty changed");
-                        break;                    
+                        break;   
+                                 
+                     default: pr.println("Ok"); pr.flush();
+                }
+
+                System.out.println("Client " + client_id + " request done");
+
+            }catch (SocketException s){
+                System.out.println("Client " + client_id + " Disconnected");
+                return;
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+                return;
+            } catch (Exception e) {
+                return;
+            }
+        }
+    }
+}
 
