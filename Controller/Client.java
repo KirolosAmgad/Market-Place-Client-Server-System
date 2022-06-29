@@ -1,9 +1,10 @@
 package Controller;
 
-import java.awt.image.BufferedImage;
+import main.Main;
+
+//import java.awt.image.BufferedImage;
 import java.net.*;
 import java.io.*;
-import java.util.Scanner;
 
 
 public class Client{
@@ -13,43 +14,40 @@ public class Client{
     public static BufferedReader bf;
 
     public static InputStream inpStr;
-    public static BufferedInputStream bufferedInputStream;
-    public static BufferedImage bufferedImage;
+   // public static BufferedInputStream bufferedInputStream;
+   // public static BufferedImage bufferedImage;
 
     public static String client_input = "";
     public static String server_sent_message = "Ok";
-    private static boolean flag = true;
     public static Socket s = null;
 
     public static void changeClientInput(String str){
         client_input = str;
-        flag = false;
     }
 
-    public static void main() throws IOException{
-
+    public static void main() throws IOException, InterruptedException {
 
         //Scanner sc = new Scanner(System.in);
         InetAddress iAddress = InetAddress.getLocalHost();
 
         try {
-            s = new Socket("localhost", PORT);
-            System.out.print("Connected to the Server \n");
+            System.out.println("Trying to connect to server...\n");
+            s = new Socket(Main.Server_IP, PORT);
+            pr = new PrintWriter(s.getOutputStream());
+            bf = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            pr.println(iAddress.getHostAddress()); pr.flush();
+            System.out.print("Connected to the Server! \n");
         } catch (IOException e) {
-            System.out.print("Server isn't up yet");
-            //sc.close();
+            System.out.print("Server isn't up yet or wrong IP, Please try to restart with correct IP");
+            //Main.msgbox("ERROR","The Server is not working now, Please try to restart the app");
+            System.exit(0);
             return;
         }
 
-        pr = new PrintWriter(s.getOutputStream());
-        bf = new BufferedReader(new InputStreamReader(s.getInputStream()));
+
         //for the image receiving
-        inpStr = s.getInputStream();
-        bufferedInputStream = new BufferedInputStream(inpStr);
-
-        pr.println(iAddress.getHostAddress()); pr.flush();
-
-
+        //inpStr = s.getInputStream();
+        //bufferedInputStream = new BufferedInputStream(inpStr);
 
 //        while(true){
 //            if (server_sent_message.equals("Not Found") ||server_sent_message.equals("Ok") || server_sent_message.equals("Wrong info") ||server_sent_message.equals("Done") || server_sent_message.equals("Successful Login")|| server_sent_message.split(" ")[0].equals("Enter")){
