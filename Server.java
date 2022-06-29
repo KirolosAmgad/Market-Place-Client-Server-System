@@ -276,4 +276,29 @@ class EchoThread extends Thread {
                         Server.preparedStmt.execute(); System.out.println("sql : " + query);
                         pr.println("Done");pr.flush(); System.out.println("Data updated successfully from admin");
                         break;
+  case ("Admin View Orders"):
+                        query = "select O.ID AS 'Order ID', Fname, Lname, C.Email, P.product_name, P.category, OI.qty, OI.price, O.date, C.address From client C, order_item OI, products p, `market place`.order  O where O.client_email = C.Email And OI.order_id = O.id And P.product_ID = OI.product_ID;";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        Boolean data_exist = false;
+                        pr.println("sending data"); pr.flush();
+                        while(rs.next()) {
+                            pr.println(rs.getInt(1));       pr.flush();
+                            pr.println(rs.getString(2));    pr.flush();
+                            pr.println(rs.getString(3));    pr.flush();
+                            pr.println(rs.getString(4));    pr.flush();
+                            pr.println(rs.getString(5));    pr.flush();
+                            pr.println(rs.getString(6));    pr.flush();
+                            pr.println(rs.getInt(7));       pr.flush();
+                            pr.println(rs.getFloat(8));     pr.flush();
+                            pr.println(rs.getString(9));    pr.flush();
+                            pr.println(rs.getString(10));   pr.flush();
+
+                            System.out.println("Data is sent");
+                            data_exist = true;
+                        }
+                        if(!data_exist) { pr.println("No Data"); pr.flush(); System.out.println("No Data");}
+                        else { pr.println("Done"); pr.flush(); System.out.println("sent data successfully");}
+                        break;
 
