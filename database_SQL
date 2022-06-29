@@ -130,6 +130,39 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `order`
+--
+
+LOCK TABLES `order` WRITE;
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (6,'el zatoun el dor el talet',90,'john@gmail.com','2022-05-25 17:16:54.87'),
+(7,'el zatoun el dor el talet',401.89,'john@gmail.com','2022-05-27 17:16:54.87'),
+(8,'el zatoun el dor el talet',125.43,'john@gmail.com','2022-05-26 17:16:54.87'),
+(9,'masr el gedida el dor el 5ames',134.04,'mark@gmail.com','2022-05-28 17:16:54.87'),
+(10,'obour',208.36,'mariz@gmail.com','2022-05-30 17:16:54.87'),
+(11,'obour',339.19,'mariz@gmail.com','2022-05-29 17:16:54.87'),
+(12,'el zatoun el dor el talet',80,'john@gmail.com','2022-06-19 21:44:45.956'),
+(13,'rehab',181.22,'kiro@hotmail.com','2022-06-20 00:05:54.033'),
+(14,'rehab',85,'kiro@hotmail.com','2022-06-20 03:16:47.842'),
+(15,'rehab',40,'kiro@hotmail.com','2022-06-20 03:22:09.584'),
+(16,'el abbaseya',30,'mayar@gmail.com','2022-06-21 00:46:18.782'),
+(17,'el abbaseya',100.78,'mayar@gmail.com','2022-06-21 00:47:54.249'),
+(18,'rehab',188.35,'kiro@hotmail.com','2022-06-21 06:57:21.275'),
+(19,'obour',640.07,'mariz@gmail.com','2022-06-26 15:36:56.72'),
+(20,'rehab',30,'kiro@hotmail.com','2022-06-26 15:39:03.574'),
+(21,'rehab',30,'kiro@hotmail.com','2022-06-26 15:41:33.104'),
+(22,'rehab',20.87,'kiro@hotmail.com','2022-06-26 15:42:06.426'),
+(23,'obour',2835,'mariz@gmail.com','2022-06-26 15:44:44.685'),
+(24,'rehab',810,'kiro@hotmail.com','2022-06-26 15:46:10.663'),
+(25,'heliopolis',60,'claire@gmail.com','2022-06-26 16:22:48.275'),
+(26,'el zatoun el dor el talet',500,'john@gmail.com','2022-06-27 16:15:32.34'),
+(27,'el zatoun el dor el talet',116.55,'john@gmail.com','2022-06-27 16:19:01.859'),
+(28,'el zatoun el dor el talet',647.5,'john@gmail.com','2022-06-27 19:21:32.063'),
+(29,'el zatoun el dor el talet',314,'john@gmail.com','2022-06-28 23:05:57.014');
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 /* Table structure for table `order_item` */
 
@@ -146,6 +179,68 @@ CREATE TABLE `order_item` (
   CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`product_ID`) REFERENCES `products` (`product_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_item`
+--
+
+LOCK TABLES `order_item` WRITE;
+/*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
+INSERT INTO `order_item` VALUES (40,2,6,50),
+(50,10,6,458),
+(90.21,3,7,38031),
+(311.68,4,7,563471),
+(40,2,8,50),
+(20,4,8,458),
+(65.43,1,8,144115),
+(20,1,9,50),
+(20,4,9,458),
+(35,2,9,233575),
+(59.04,3,9,968220),
+(60,3,10,50),
+(130.86,2,10,144115),
+(17.5,1,10,233575),
+(40,2,11,50),
+(65.43,1,11,144115),
+(233.76,3,11,563471),
+(80,4,12,50),
+(40,2,13,50),
+(10,2,13,458),
+(52.5,3,13,233575),
+(78.72,4,13,968220),
+(15,3,14,458),
+(70,4,14,233575),
+(40,2,15,50),
+(30,1,16,1),
+(41.74,2,17,2),
+(59.04,3,17,968220),
+(60,2,18,1),
+(104.35,5,18,2),
+(24,2,18,4),
+(40,2,19,50),
+(90.21,3,19,38031),
+(392.58,6,19,144115),
+(77.92,1,19,563471),
+(39.36,2,19,968220),
+(30,1,20,1),
+(30,1,21,1),
+(20.87,1,22,2),
+(2835,70,23,5),
+(810,20,24,5),
+(60,3,25,50),
+(500,20,26,1),
+(80.55,9,27,2),
+(36,6,27,844741),
+(150,6,28,1),
+(53.7,6,28,2),
+(125.65,7,28,3),
+(29.4,6,28,4),
+(288.75,7,28,6),
+(44.75,5,29,2),
+(241.75,5,29,5),
+(27.5,1,29,38031);
+/*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 /* Table structure for table `products` */
@@ -166,6 +261,30 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB AUTO_INCREMENT=968221 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `products`
+--
+
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (69,'Fish',25,'Tuna',1,'/img/tuna.png','87CEFA'),
+(72,'Fruits',8.95,'Strawberry',2,'/img/strawberry.png','FFEFD5'),
+(93,'Fruits',17.95,'Watermelon',3,'/img/watermelon.png','FFDAB9'),
+(92,'Snacks',4.9,'Indomie',4,'/img/indomie.png','98FB98'),
+(5,'Sauces',48.35,'Ketchup',5,'/img/ketchup.png','FAEBD7'),
+(93,'Fruites',41.25,'Orange',6,'/img/orange.png','32CD32'),
+(1,'Fruits',39.95,'Banana',50,'/img/banana.png','FFA500'),
+(17,'Fruits',92.95,'Pineapple',458,'/img/Pineapple.png','FFFF00'),
+(74,'Fruits',27.5,'Mango',38031,'/img/mango.png','FF8C00'),
+(50,'dairy',28.75,'Chocolate',144115,'/img/chocolate.png','CD853F'),
+(54,'Snacks',5,'Chipsey',233575,'/img/chipsey.png','D3D3D3'),
+(50,'Fruits',29.95,'Grapes',557848,'/img/grapes.png','FFE4E1'),
+(61,'Fruits',16.95,'Peach',563471,'/img/peach.png','FF4500'),
+(94,'Beverages',6,'Pepsi',844741,'/img/pepsi.png','F5FFFA'),
+(78,'Fruits',24.95,'Kiwi',968220,'/img/kiwi.png','98FB98');
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
