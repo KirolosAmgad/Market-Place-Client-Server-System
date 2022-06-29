@@ -263,3 +263,8 @@ class EchoThread extends Thread {
                         rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
                         if(rs.next()) { pr.println(rs.getString(1)); pr.flush(); }
                         break;
+                     case("get admin balance"):
+                        query = " SELECT `balance` FROM `admin` WHERE Email = 'admin@emarket.net' ;";
+                        rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
+                        if(rs.next()) { pr.println(rs.getFloat(1)); pr.flush(); }
+                        break;
