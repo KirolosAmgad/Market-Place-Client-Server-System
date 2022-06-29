@@ -397,7 +397,20 @@ class EchoThread extends Thread {
                         System.out.println("Item with ID : " + productID + " is added successfully to cart of the client with email " + email);
                         break;
                                    
+                    case ("view cart items"):
                                    
+                        query = " SELECT `cart_id` FROM `client` WHERE Email = '" + email + "';";
+                        rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
+                        if(rs.next()) cart_id = rs.getInt(1);
+
+                        query = "select * from cart_item where cart_id =" +cart_id+ " ;";
+                        rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
+
+                        while (rs.next()) { for(int i=1; i<4; i++) {pr.println(rs.getInt(i)); pr.flush();} }
+                        
+                        pr.println("Done"); pr.flush();
+                        System.out.println("Cart items retrieved successfully");
+                        break;                                  
                                    
                      case("user dec cart"):
                         pr.println("Enter the Product ID"); pr.flush();
