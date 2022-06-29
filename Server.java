@@ -317,5 +317,29 @@ class EchoThread extends Thread {
                         if(!data_exists) { pr.println("No Data"); pr.flush(); System.out.println("No Data");}
                         else { pr.println("Done"); pr.flush(); System.out.println("sent data successfully");}
                         break;
+                    case ("add product"):
+                        pr.println("Enter product ID");         pr.flush();     productID = Integer.parseInt(brinp.readLine());
+                        pr.println("Enter product name");       pr.flush();     product_name = brinp.readLine();
+                        pr.println("Enter category");           pr.flush();     category = brinp.readLine();
+                        pr.println("Enter product price");      pr.flush();     price = Float.parseFloat(brinp.readLine());
+                        pr.println("Enter product quantity");   pr.flush();     quantity = Integer.parseInt(brinp.readLine());
+
+                        System.out.println("Product ID: " + productID);
+                        System.out.println("Product name: " + product_name);
+                        System.out.println("Enter category: " + category);
+                        System.out.println("Enter product price: " + price);
+                        System.out.println("Enter product quantity: " + quantity);
+
+                        query = " INSERT INTO `products` (`quantity`,`category`,`price`,`product_name`,`product_ID`) values (?, ?, ?, ?, ?)";
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.setInt(1, quantity);
+                        Server.preparedStmt.setString(2, category);
+                        Server.preparedStmt.setFloat(3, price);
+                        Server.preparedStmt.setString(4, product_name);
+                        Server.preparedStmt.setInt(5, productID);
+                        Server.preparedStmt.execute();
+                        System.out.println("Product added");
+                        pr.println("Done"); pr.flush();
+                        break;
                     
 
