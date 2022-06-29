@@ -200,3 +200,13 @@ class EchoThread extends Thread {
                             System.out.println("Data Sent");
                         }
                         break;
+                  case ("add to wallet"):
+                        pr.println("Enter money amount"); pr.flush();
+                        float money = Float.parseFloat(brinp.readLine());
+                        query = "update client set amount_of_money = amount_of_money + " + money + " where email = '" + email + "';";
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        System.out.println("sql : " + query);
+                        pr.println("Done");pr.flush();
+                        System.out.println("The Money isadded successfully");
+                        break;
