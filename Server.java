@@ -284,6 +284,27 @@ class EchoThread extends Thread {
                         Server.preparedStmt.execute(); System.out.println("sql : " + query);
                         pr.println("Done");pr.flush(); System.out.println("Data updated successfully from admin");
                         break;
+                     case ("add quantity to stock"):
+                        pr.println("Enter the Product Name");pr.flush();
+                        product_name = brinp.readLine();
+                        pr.println("Enter the quantity to add");pr.flush();
+                        quantity = Integer.parseInt(brinp.readLine());
+                        System.out.println(quantity);
+                        query = "update products set quantity = quantity + "+quantity+ " where product_name = '"+product_name+ "';";
+                        System.out.println("sql : " + query);
+                        Server.preparedStmt = Server.con.prepareStatement(query);
+                        Server.preparedStmt.execute();
+                        query = "select quantity from products where product_name = '" +  product_name + "';";
+                        System.out.println("sql : " + query);
+                        rs = Server.stmt.executeQuery(query);
+                        System.out.println("query is done");
+                        int  qty_after = 0;
+                        if(rs.next()) {
+                            qty_after = rs.getInt(1);
+                        }
+                        pr.println(qty_after); pr.flush();
+                        pr.println("Done"); pr.flush(); System.out.println("qty changed");
+                        break;
                      case ("Admin View Orders"):
                         query = "select O.ID AS 'Order ID', Fname, Lname, C.Email, P.product_name, P.category, OI.qty, OI.price, O.date, C.address From client C, order_item OI, products p, `market place`.order  O where O.client_email = C.Email And OI.order_id = O.id And P.product_ID = OI.product_ID;";
                         System.out.println("sql : " + query);
