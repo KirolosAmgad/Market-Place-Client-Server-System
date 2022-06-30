@@ -357,16 +357,6 @@ class EchoThread extends Thread {
                         }
                         pr.println("Done");pr.flush();
                         break;
-                    case("get product info"):
-                        pr.println("Enter product ID :"); pr.flush(); productID = Integer.parseInt(brinp.readLine());
-                        query = " SELECT `product_name`, `category`, `price` FROM `products` WHERE product_ID = " + productID + " ;";
-                        rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
-                        if(rs.next()){
-                            for(int i=1; i<4; i++) {pr.println(rs.getString(i)); pr.flush();}
-                        }
-                        pr.println("Done"); pr.flush();
-                        System.out.println("Sent data successfully");
-                        break;
                     case ("add product"):
                         pr.println("Enter product ID");         pr.flush();     productID = Integer.parseInt(brinp.readLine());
                         pr.println("Enter product name");       pr.flush();     product_name = brinp.readLine();
@@ -519,7 +509,7 @@ class EchoThread extends Thread {
                         Server.preparedStmt.execute();
                         pr.println("Done"); pr.flush(); System.out.println("qty changed");
                         break;
- case("purchase"):
+                    case("purchase"):
 
                         synchronized(Server.thrd){
                             query = "select CI.*, p.price, p.quantity from client AS C, cart_item as CI, products as p where C.cart_id = CI.cart_id and p.product_ID = CI.product_ID and email='" + email + "';";
