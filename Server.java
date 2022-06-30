@@ -336,7 +336,16 @@ class EchoThread extends Thread {
                         }
                         pr.println("Done");pr.flush();
                         break;
-                                   
+                    case("get product info"):
+                        pr.println("Enter product ID :"); pr.flush(); productID = Integer.parseInt(brinp.readLine());
+                        query = " SELECT `product_name`, `category`, `price` FROM `products` WHERE product_ID = " + productID + " ;";
+                        rs = Server.stmt.executeQuery(query); System.out.println("sql : " + query);
+                        if(rs.next()){
+                            for(int i=1; i<4; i++) {pr.println(rs.getString(i)); pr.flush();}
+                        }
+                        pr.println("Done"); pr.flush();
+                        System.out.println("Sent data successfully");
+                        break;
                     case ("add product"):
                         pr.println("Enter product ID");         pr.flush();     productID = Integer.parseInt(brinp.readLine());
                         pr.println("Enter product name");       pr.flush();     product_name = brinp.readLine();
